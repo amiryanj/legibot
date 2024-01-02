@@ -1,0 +1,46 @@
+%Robots are not limited to factories and fabrication lines anymore and they are becoming more and more of a Must for service-oriented tasks, such as in hospitals, hotels, restaurants, and so on.
+
+%This means they should understand, and respect the -unwritten social rules that define how people expect other agents to behave around them. This is what is called social-compliant behaviors and Francis et al [REF] pointed out there are eight different sets of principles for a robot to become socially compliant, including safety, politeness, legibility, and so on.
+%Even though these axes are not necessarily orthogonal which means improving on one aspect can impact other aspects, either negatively or positively.
+
+%Among those, legibility is a less-developed concern in robots and has a long way to go. legible motion, is characterized by the ability of a robot to clearly and quickly convey intentions and goals to the individuals in its vicinity holds significant importance in this context.
+
+Robotic systems have transcended their traditional roles in factories and manufacturing lines, expanding into various service-oriented domains, including healthcare, hospitality, and food service. As robots increasingly share spaces with humans, it becomes imperative for them to comprehend and adhere to the implicit social norms that govern human interaction. This imperative gives rise to the concept of social-compliant behaviors, wherein robots are expected to exhibit behaviors that align with human expectations.
+%
+Francis et al. \cite{francis2023principles} have identified eight distinct sets of principles that collectively define social compliance for robots, encompassing aspects such as safety, politeness, and legibility. Notably, these dimensions are not mutually exclusive; improvements in one dimension can influence others, either positively or negatively.
+
+Among these dimensions, legibility remains an underdeveloped aspect in the field of robotics and presents substantial room for advancement. Legibility in robotic motion refers to the robot's capacity to clearly and swiftly communicate its intentions and objectives to individuals in its vicinity. In the context of human-robot interaction, achieving legible motion is of paramount significance, as it enhances user understanding, trust, and overall user experience.
+%
+It might sometimes be simply as the agent's effort to exaggerate its action to make sure the opponent is aware of its decision, which can be critical in human-robot tasks that require tight collaboration between the two parties. But, also it can appear in more complex scenarios to respect the social rules in a certain space, and adapt to some acceptable behaviors in that context.
+
+\subsection{A Note from Cognitive Science}
+Human brains makes significant efforts in the prediction of the events around a person. This predictions happen in short-term and long-term ways, to help the person for making decision. One of such predictions is about moving objects.
+The brain processes moving objects, starting with the retina's photoreceptor cells that send signals via the optic nerve to the thalamus and the primary visual cortex (V1). Directionally selective neurons in V1 respond to movement. Information then travels to areas like MT and MST, enabling the brain to construct a mental representation of the moving object, including its location, speed, and direction. This representation guides eye and body movements for tracking and interaction.
+
+
+
+
+%%%
+%This concept was initially raised by Dragan et al. [REF] to distinguish predictable behavior from legible behavior. A https://www.overleaf.com/project/65169f082a77e596ef35ffccmain pitfall though is that the original framework does not introduce any notion of an observer agent in the environment.
+%There have been a few steps in recent years to address this gap, including Taylor et al. [REF] who tried to take the field-of-view of an observer agent into account, and Nikolaidis et al. [REF] who tried to include viewpoint into the formula and also formulate the occlusion. 
+
+\subsection{Contributions}
+The concept of legibility in robot behavior was initially introduced by Dragan et al. \cite{dragan2013legibility} as a means to differentiate predictable behaviors from legible actions. One limitation of the original framework, however, is the absence of consideration for an observer agent within the environment. 
+%
+In recent years, efforts have been made to address this gap in the literature. For instance, Nikolaidis et al. \cite{nikolaidis2016based} extended this work by introducing considerations of viewpoint and formulating solutions for handling occlusion scenarios.
+Taylor et al. [REF] sought to incorporate the perspective of an observer agent by taking their field of view into account. 
+
+\hl{
+    We argue that the concept predictability that was put against legibility in the work of Dragan et al. \cite{dragan2013legibility} is more reminding us of efficiency rather than predictability. In other words, legibility is still a property that makes predictions simpler and more intuitive for the observers, while an efficient action is not necessarily legible, but not always intuitive for the observer either. The efficiency optimization process that is done by a machine does not make the outputs necessarily predictable or un-predictable.
+}
+
+In this work, we propose a new approach for computing the motion legibility. We go beyond the trajectory level computations and propose our method based on visual inputs and semantics information. For this we have studied a short-term motion prediction method and a long-term goal prediction algorithm in an effort to cover the gap in the existing research in addressing the visual inputs of a human observer for computing legibility. 
+
+
+\subsection{Structure}
+
+In this paper, we explore the question of whether it is possible to redefine legibility by shifting the focus from directly processing the robot's geometric trajectory to using visual inputs. This can help us to take one more step toward human-centric robot legible motions.
+Our approach leverages optical flow-based visual input to simulate how a human observer perceives a robot’s actions. 
+%
+In the next section, we review the related work in the field [REF]. Then in section [REF] we propose the aforementioned framework in detail, and then in section [REF] we explain the experiments we conducted with simulated and real robots to demonstrate the effectiveness of our proposed methodology in a restaurant scenario.
+

@@ -1,0 +1,167 @@
+%! Author = javad
+%! Date = 28/12/2023
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{caption}
+
+\title{Legible Motion for Service Robots}
+
+\author{Javad Amirian}
+
+% Document
+\begin{document}
+
+    \maketitle
+
+%    \section{Background}
+%In this paper, we explore the question of whether it is possible to redefine legibility
+%by shifting the focus from directly processing the robot's geometric trajectory to using visual inputs.
+%This can help us to take one more step toward human-centric robot legible motions.
+
+    %%%%%%%%% Copy from docs/iros2024/sections/intro.tex %%%%%%%%%
+
+
+%\subsection{A Note from Cognitive Science}
+%Human brains makes significant efforts in the prediction of the events around a person.
+%This predictions happen in short-term and long-term ways, to help the person for making decision.
+%One of such predictions is about moving objects.
+%The brain processes moving objects, starting with the retina's photoreceptor cells that send signals via the optic nerve
+% to the thalamus and the primary visual cortex (V1). Directionally selective neurons in V1 respond to movement.
+%%
+%Information then travels to areas like MT and MST, enabling the brain to construct a mental representation of the moving object,
+% including its location, speed, and direction. This representation guides eye and body movements for tracking and interaction.
+
+
+\section{Proposed Contributions:}
+    \noindent
+    \subsection{Contrib (1): Modeling Visual Perceptions}
+%    \textit{Contrib (1):} Simulating Observer's Viewpoint:
+%    Adding f(t) (a descending function of time) to the legibility function, to maximize the legibility of the motion at the beginning of the motion, does not always work.
+%    We also consider the saliency of the motion in computing the legibility of a motion.
+%    Imagine doing a motion far from the observer, is not a salient motion, and the observer does not pay attention to it,
+%    even though it is still considered legible in the previous works, and is still in the field of view of the observer.
+    %
+    The concept of legibility against predictability of robot behavior was initially introduced by Dragan et al. \cite{dragan2013legibility}.
+    Even though in the original paper, the authors did not go beyond a general notion of the observer, and did not consider
+    how the robot's behavior can be perceived by the observer, there have been a few steps in recent years to address this gap.
+    %
+    For instance, Nikolaidis et al. \cite{nikolaidis2016based} extended this work by introducing considerations of viewpoint and projecting the motion on the observer's image plane,
+    Furthermore, they formulated solutions for handling occlusion scenarios.
+    %
+    Taylor et al. \cite{taylor2018human} sought to incorporate the observer's field of view into the legibility computation.
+    They also, considered a scenario with multiple observers, and proposed a way to compute the legibility of a motion for each observer.
+    %
+    But there is still a gap in the literature, in addressing the visual inputs of a human observer for computing legibility.
+    In this work, we propose a new approach for computing the motion legibility by considering visual factors from the observer's perspective.
+    %
+    % We go beyond the trajectory level computations and propose our method based on visual inputs and semantics information.
+    %For this we have studied a short-term motion prediction method
+    %and a long-term goal prediction algorithm in an effort to cover the gap in the existing research
+    %in addressing the visual inputs of a human observer for computing legibility.
+
+    \noindent
+    \textbf{Example:}
+    Let's imagine a scenario where a service robot is delivering a drink to a table in a restaurant.
+    And the robot wants the observer to know that it is going to the table, and not to the other tables in the restaurant.
+    Based on Dragan's definition, the robot should choose a trajectory that maximizes the prediction of the right goal for the observer.
+    And the robot should do this maximization at the beginning of the motion, due to the $f(t)$ term, in the legibility function [REF],
+    that encourages the robot to maximize the legibility at the beginning of the motion.
+    But we know if the target person does not pay attention to the robot, this is not a good effort, and it might just sacrifice its efficiency, without any gain in legibility.
+    A model that consider the observer's field of view or the obstacles, do not perform any better,
+    because the motion is still happening in the observer's field of view, and the observer can see the robot.
+
+    In this work we propose to compute the motion vectors of the robot from the observer's perspective,
+    and use this information to compute the legibility of the motion.
+
+%    \noindent
+%    \textbf{Discussion:}
+%    In [DRAGAN] the idea of using $f(t)$ was proposed to encourage the robot to maximize the legibility at the beginning of the motion.
+
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%    \section{Proposed Method}
+
+
+    \noindent
+    \subsection{Contrib (2): Synthesis} %New way to generate legible motions for mobile robots:
+    %%%%%%%%%%%%%%%%%%%%
+    The second contribution of this work is a new approach to generate legible motions for mobile robots.
+    %
+    In fact, the problem of generating legible motions for mobile robots has not received as much attention as the evaluation.
+    %
+    For example, in several works legible and illegible trajectories were manually designed by the authors,
+    or handcrafted to collect the user study data [REFs].
+    And in [Ada-RO-MAN2022] the paths were selected via a sampling approach.
+
+    % in [X], the authors used Reinforcement Learning to learn a policy that generates legible motions, ...
+    %
+    From [X] we know that optimizing the legibility function directly is not always possible.
+    This is because that $\Delta \mathbf{L}(\xi) = 0$ or $\mathbf{L}(\xi) = 1$ might not have a solution in the finite space.
+    For this reason, we might need to add some constraints to the equation to make it solvable.
+    In the original work, Dragana et al. [X] this is done by adding a regularizer that discourage increasing the path length.
+    %L(ξ) = legibility(ξ) − λC(ξ)
+    $L(\xi) = legibility(\xi) - \lambda C(\xi)$
+    where $C(\xi)$ is the path length, and $\lambda$ is a constant.
+    Also, Dragan and Srinivasa [X], introduce a trust region constraint on the optimization
+     to ensure the motion does not become too surprising or unpredictable to the observer.
+    This approach in the end, turns to finding a good value for a parameter $\beta$, using a user study.
+    Moreover, due to the iterative nature of this approach, it can compromise the real-time performance of the system.
+    %    Other works [NIKOLAIDIS] a gradient ascent optimization is called N times, and the solution of the last iteration is returned.
+
+    In this work, we propose to use artificial potential fields to directly generate legible motions for mobile robots.
+    We show that this approach can improve the time performance of the system, and can generate legible motions in real-time.
+%    We then consider adding Random-based sampling to the potential field to generate legible motions in cluttered environments, where the potential field is not enough to generate legible motions.
+    Our formulation takes into account the final pose of the robot at the end of the motion,
+    and introduces new force fields to encourage legibility of robot motions.
+
+    %%%%%%%%%%%%%%%%%%%%
+
+
+    \noindent
+    \subsection{Contrib (3): New metrics}
+
+    \noindent
+    (a) Absolute Envelope of Readiness:
+    We introduce a slight modification to the {envelope of readiness} metric proposed in [REF],
+    since the original metric is bound to a coefficient that is not generalizable to different scenarios.
+    Here, we remove the 5\% tolerance from the metric, and we call it the absolute envelope of readiness.
+
+%    \noindent
+%    (b) ...
+
+%    \section{TODO}
+%    - To improve the robot-restaurants scenario simulation.
+%    - To
+
+%    \subsection{Structure}
+%    In the next section, we review the related work in the field [REF].
+%    Then in section [REF] we propose the aforementioned framework in detail,
+%    and then in section [REF] we explain the experiments we conducted with simulated and real robots
+%     to demonstrate the effectiveness of our proposed methodology in a restaurant scenario.
+
+    \section{References}
+
+    \begin{enumerate}
+        \item Legibility and Predictability of Robot Motion
+        \item Observer-Aware Legibility for Social Navigation
+        \item Generating Legible Motion
+        \item Viewpoint-Based Legibility Optimization
+        \item A new approach to evaluating legibility: Comparing legibility frameworks using framework-independent robot motion trajectories
+        \item A flexible optimization-based method for synthesizing intent-expressive robot arm motion
+        \item A MIP-Based Approach for Multi-Robot Geometric Task-and-Motion Planning
+        \item Wait Wait, Nonverbally Tell Me: Legibility for Use in Restaurant Navigation
+%        \item
+
+    \end{enumerate}
+
+
+%\bibliographystyle{IEEEtran}
+%\bibliography{refs}
+
+
+\end{document}
