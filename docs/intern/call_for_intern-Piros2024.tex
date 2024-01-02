@@ -1,0 +1,83 @@
+%! Author = javad
+%! Date = 28/12/2023
+
+% Preamble
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{ntheorem}
+\usepackage{hyperref}
+
+\title{Call for Internship (ISIR - Sorbonne University)\\ Social Robot Navigation with Pepper Robot}
+
+% Document
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+Human Robot Interaction is one of the main pillars of robotics that has a long way to go to adapt robots in our daily life environments.
+Robots working in human populated environments should be able to understand the human behavior and adapt their motions to be more socially compliant.
+This means, they should not only guarantee the safety of the people around them, but also should be able to show legible motions to be more understandable by humans.
+In fact, by generating approach trajectories that are both legible and informative, we can optimize service efficiency and customer experience in dynamic, shared spaces.
+As part of \href{https://www.eurobin-project.eu/} {euROBIN project}
+, we are working on a social navigation stack to deliver a small object to a person in a cafe / restaurant while being gentle and legible.
+This requires designing a good architecture for the perception system that captures the necessary information from the environment and the people in it.
+And to develop motion planning algorithms that can generate legible motions for the robot while adapting to the environment changes.
+
+\section{Internship Objectives}
+The main objective of this internship is to develop a social navigation stack for Pepper robot.
+This stack should perceive the human behavior plus any other relevant information from the scene, predict the motions and finally generate legible motion plans for the robot.
+But since Pepper, is not equipped with the necessary sensors to perceive the environment, we need to equip it with extra sensors and processing units.
+We want to leverage Intel RealSense stereo cameras and Nvidia Jetson GPUs to enhance the perception and processing capabilities of the robot.
+The algorithms should be implemented in ROS (preferably ROS2) and be tested on Pepper robot.
+But this might also require to simulate the robot before testing on the real robot, for which we can use Gazebo or Unity.
+This internship is a great opportunity to dive into the ROS ecosystem, learn about social navigation and also learn about the latest technologies in computer vision for robotics.
+
+
+%EuROBin [9] is a network of excellence in robotics in Europe, bringing together private companies and public institutions. In November, the 2nd EuROBin event will take place during the Humanoïds conference in Nancy. A cooperative competition will be held there, in which teams will be rewarded for carrying out specific tasks with robots by exploiting the work of other European teams.
+%The aim of this internship is to build on the team’s previous work [10] to extend these results to the robots entered in the EuROBin competition. The aim is to study the grippers of each team involved, to adapt the results to these grippers, and to ensure that the European partners can exploit them on their robots to improve their gripping capabilities.
+
+\section{Required Profile}
+Motivated Master's students with a robust academic foundation in Computer Vision and Robot Navigation, eager to contribute to a dynamic and collaborative robotics team.
+
+\section{Skills}
+Skills needed include expertise in:
+
+\begin{itemize}
+    \item programming (Python / C++)
+    \item implement nodes and algorithms in ROS/ROS2
+    \item debugging multi-threaded applications
+    \item motion planning, and obstacle avoidance algorithms
+    \item stereo vision and depth cameras
+    \item simulation (Gazebo, Unity, Isaac Sim, …)
+    \item basic experience with a 3D CAD design software (Solidworks, FreeCAD, …)
+    \item and demonstrate strong problem-solving skills.
+\end{itemize}
+
+
+\section{Internship Details}
+\begin{itemize}
+    \item Supervised by: Javad Amirian, Mouad Abrini
+    \item Start date: February or March 2024
+    \item Duration of internship: 6 months
+    \item Level of studies required: Currently enrolled in Master 2, or final year of engineering school.
+    \item Host laboratory: ISIR (Institut des Systèmes Intelligents et de Robotique), Campus Pierre et Marie Curie, 4 place Jussieu, 75005 Paris.
+    \item Email: [firstname].[lastname]@isir.upmc.fr
+\end{itemize}
+
+Send your application by e-mail, with [Internship euROBIN] in the subject line, including a CV and a cover letter.
+It is strongly recommended that you also attach one or more personal projects (github, etc…).
+
+    \section{References}
+    \begin{enumerate}
+        \item euROBIN project \href{https://www.eurobin-project.eu/}{https://www.eurobin-project.eu}
+        \item Taylor, Ada V., Ellie Mamantov, and Henny Admoni. "Observer-aware legibility for social navigation." 2022 31st IEEE International Conference on Robot and Human Interactive Communication (RO-MAN). IEEE, 2022.
+%        \item Dragan, Anca D., Kenton CT Lee, and Siddhartha S. Srinivasa. "Legibility and predictability of robot motion." 2013 8th ACM/IEEE International Conference on Human-Robot Interaction (HRI). IEEE, 2013.
+        \item Caniot, Maxime, Vincent Bonnet, Maxime Busy, Thierry Labaye, Michel Besombes, Sebastien Courtois, and Edouard Lagrue. "Adapted pepper." arXiv preprint arXiv:2009.03648 (2020).
+        \item Wallkotter, Sebastian, Mohamed Chetouani, and Ginevra Castellano. "A new approach to evaluating legibility: Comparing legibility frameworks using framework-independent robot motion trajectories." arXiv preprint arXiv:2201.05765 (2022).
+%        \item Amirian, J. (2021). Human motion trajectory prediction for robot navigation (Doctoral dissertation, Université de Rennes 1).
+
+    \end{enumerate}
+\end{document}
