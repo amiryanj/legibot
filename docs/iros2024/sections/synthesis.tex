@@ -5,12 +5,10 @@
 
 The problem of generating legible motions for mobile robots has not received as much attention as the evaluation.
 
-
 In fact, optimizing the legibility function directly is not always possible [REF].
 This is because that $\Delta \mathbf{L}(\xi) = 0$ or $\mathbf{L}(\xi) = 1$ might not have a solution in the finite space.
 For this reason, we might need to add some constraints to the equation to make it solvable.
 In the original work, Dragana et al. [X] this is done by adding a regularizer that discourage increasing the path length.
-%L(ξ) = legibility(ξ) − λC(ξ)
 $L(\xi) = legibility(\xi) - \lambda C(\xi)$
 where $C(\xi)$ is the path length, and $\lambda$ is a constant.
 %    Also, Dragan and Srinivasa [X], introduce a trust region constraint on the optimization
@@ -85,7 +83,7 @@ We can approximate $L^j(g | \xi_{t:t+dt})$ with the projected cosine distance be
 
 \begin{equation}
     \label{eq:prob_leg_approx}
-    p^j(g \neq \mathrmG^* | \xi_{t:t+dt}) \approx \sum_{g \neq \mathrm G^*}  d (\measuredangle \mathrm T^j \times \mathbf{v}_{t:t+dt}(.|\mathrm G^*),
+    p^j(g \neq \mathrm G^* | \xi_{t:t+dt}) \approx \sum_{g \neq \mathrm G^*}  d (\measuredangle \mathrm T^j \times \mathbf{v}_{t:t+dt}(.|\mathrm G^*),
                                                                  \measuredangle \mathrm T^j \times \mathbf{v}^*_{t:t+dt}(.|g))
 \end{equation}
 

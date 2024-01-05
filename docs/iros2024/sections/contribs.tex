@@ -1,5 +1,3 @@
-\usepackage{latexsymb}
-
 %    \section{Background}
 %In this paper, we explore the question of whether it is possible to redefine legibility
 %by shifting the focus from directly processing the robot's geometric trajectory to using visual inputs.
@@ -77,11 +75,11 @@
     Moreover, due to the iterative nature of this approach, it can compromise the real-time performance of the system.
     %    Other works [NIKOLAIDIS] a gradient ascent optimization is called N times, and the solution of the last iteration is returned.
 
-    In this work, we propose to use artificial potential fields to directly generate legible motions for mobile robots.
+    In this work, we propose to use local planning to generate legible motions for mobile robots.
     We show that this approach can improve the time performance of the system, and can generate legible motions in real-time.
 %    We then consider adding Random-based sampling to the potential field to generate legible motions in cluttered environments, where the potential field is not enough to generate legible motions.
     Our formulation takes into account the final pose of the robot at the end of the motion,
-    and introduces new force fields to encourage legibility of robot motions.
+    and introduces a new cost function to the local planner, to generate legible motions.
 
     %%%%%%%%%%%%%%%%%%%%
 
