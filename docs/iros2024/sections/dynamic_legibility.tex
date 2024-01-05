@@ -1,0 +1,51 @@
+\section{Dynamic Legibility}
+
+\begin{itemize}
+    \item
+    RQ1: How can legible motions be designed and implemented in HRC systems to enhance the transparency and understand robot actions and intentions?
+%    \item
+%    RQ2: What methods and technologies can be employed to enable the robot to take the user's perspective, and how does this enhance the efficiency and naturalness of collaborative interactions?
+%    \item
+%    RQ3: How can intention prediction in HRC be improved, and what are the key factors that influence the accuracy and speed of predicting user intentions?
+\end{itemize}
+
+Three assumptions for our problem:
+\begin{itemize}
+    \item
+    We are developing a handover task between a robot and a human.
+    \item
+    The robot will track the human's head pose and gaze direction to compute the legibility of its motion.
+    \item
+    The generation of legible motions is done in real-time, and the robot should be able to generate legible motions for different scenarios.
+\end{itemize}
+
+
+Trajectory synthesis within dynamic environment:
+
+\subsection{Background: Legibility}
+
+\begin{equation}
+    \mathbf{L}(\xi) = P(G^* |\xi_{S \rightarrow Q}) =
+    \frac{\exp (-C(\xi_{S \rightarrow Q})) \int \exp( -C(\xi_{Q \rightarrow G}))}
+         {\int \exp (-C(\xi_{S \rightarrow G}))}
+\end{equation}
+
+\subsection{Projection of the trajectory for a given observer}
+Replace $C(\xi)$ with $T(C(\xi))$ where $T$ is the projection function from the observer's frame.
+
+\subsection{Challenges}
+
+\begin{itemize}
+    \item \textbf{Moving Observer:} when the observer position moves from point $O_A$ to $O_B$, the robot's motion should adapt.
+    should we re-calculate \ref{eq:legibility} from scratch? or can we use the previous calculation?\\
+    \textit{Answer:} Now we should consider $T$ as a function of time, say $T^t$:
+
+    \item \textbf{Prediction:} when we generate trajectory for time $t_0+dt$ in the future we need to have a prediction of the observer's position at that time.\\
+    \textit{Answer:} It can be simply trajectory extrapolation, or we can also predict the intention of the user and use that to predict the observer's position.
+    The prediction can be represented as a probability distribution (e.g. a Gaussian distribution) over the observer's position.
+    Which means, the projected cost of $C(\xi_{Q \rightarrow G})$ will be a distribution over the cost ...
+\end{itemize}
+
+\subsection{Scenario:}
+Here, we explain the scenario that we are working on ...
+
