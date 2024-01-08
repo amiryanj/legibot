@@ -3,95 +3,119 @@
 
 \section{Synthesis}
 
+% ================ Synthesis vs. Evaluation ================
 The main motivation of this part is to propose a practical and simple algorithm to generate legible motions for mobile robots.
-And for this we need to highlight that the synthesis problem has not received as much attention as the evaluation in the literature.
+First of all, synthesizing legible behaviors can be explained as ``finding behaviors that convince one or multiple observer that the robot is doing what it is supposed to do''.
+This is beyond the evaluation problem, where we are trying to find a metric to evaluate the legibility of a given behavior \cite{dragan2013generating}.
+And, we would like to highlight that the synthesis problem has not received as much attention as the evaluation in the literature,
+mainly because of the complexity of the problem.
+%
 
-Let's start with the legibility function, proposed by Dragan et al. \cite{dragan2013legibility}. 
-In fact, optimizing the legibility function directly is not always possible [REF].
-This is because that $\Delta \mathbf{L}(\xi) = 0$ or $\mathbf{L}(\xi) = 1$ might not have a solution in the finite space.
-For this reason, we might need to add some constraints to the equation to make it solvable.
-In the original work, Dragana et al. [X] this is done by adding a regularizer that discourage increasing the path length.
-$L(\xi) = legibility(\xi) - \lambda C(\xi)$
-where $C(\xi)$ is the path length, and $\lambda$ is a constant.
-%    Also, Dragan and Srinivasa [X], introduce a trust region constraint on the optimization
-%     to ensure the motion does not become too surprising or unpredictable to the observer.
-%    This approach in the end, turns to finding a good value for a parameter $\beta$, using a user study.
-Moreover, due to the iterative nature of this approach, it can compromise the real-time performance of the system.
-%    Other works [NIKOLAIDIS] a gradient ascent optimization is called N times, and the solution of the last iteration is returned.
 
+
+\vspace{0.3cm}
+% ================ Setup the problem ================
+We assume our mobile robot has a goal of reaching a target $\mathrm{G}^*$ that might move over time.
+However, there are other goals $\mathrm{G}^i$ that are irrelevant to the robot's task, all forming a set of goals $\mathcal{G}$.
+In the environment, there will be a set of observers $\mathcal{O}$, that contains a positive number of observers $O^j$ that are interested in the robot's behavior.
+The robot is supposed to reach the goal $\mathrm{G}^*$ in a way that is legible for all the observers $O^j$.
+Note that, the observers set $\mathcal{O}$ and the goals set $\mathcal{G}$ might be the same, but not necessarily.
+For example, in a restaurant scenario, the robot might want to deliver a dish to a customer ($\mathrm{G}^*$),
+while there might be other customers in the restaurant $\mathcal{G} \neq \mathrm{G}^*$,
+and we assume that all of them are interested in the robot's behavior ($\mathcal{O} = \mathcal{G}$).
+%
+Finally, the robot is moving in an environment $\mathcal{E}$, with an obstacle-free space $\mathcal{E}_{free}^t$ that might also change over time.
+We are interested in finding a path $\xi_{t_0:t_w}$ from the current time $t_0$ to the time $t_w$ that is legible for all the observers $O^j$,
+while satisfying the robot's task, i.e. reaching the goal $\mathrm{G}^*$, avoiding the static and dynamic obstacles,
+moving within the robot's kinematic and dynamic constraints, and so on.
+
+
+% ================ Local Planning ================
+\vsapce{~}
 
 In this work, we propose to use local planning to generate legible motions.
-Back to local planning algorithms, such as Dynamic Window Approach (DWA) [REF], are designed to generate a motion that is feasible and optimal in terms of a cost function.
+Back to local planning algorithms, such as Dynamic Window Approach (DWA) \cite{DWA1997}, are designed to generate a motion that is feasible and optimal in terms of a cost function.
 %
 In this family of algorithms, instead of finding a path from the start to the goal,
 the robot is trying to find a motion that is optimal in terms of a cost function, over a short horizon, or a Window.
 This window, denoted by $w$, is defined in such a way that the robot can stop before hitting an obstacle,
 by incorporating the robot's kinematic and dynamic constraints.
 But also, to ensure the real-time performance of the algorithm, in environments where a full plan is too expensive to compute.
-For example in a manipulation task, where we have access to a sufficient processing power,
-we can assume that the robot can compute a full plan to the goal.
+%%%% Extra
+%For example, in a manipulation task, with short-term goals and with access to a sufficient processing power,
+%we can assume that the robot can compute a full plan to the goal.
 
-Let $\xi_{t_0:t_w}$ be the path we want to plan, from the current time $t_0$ to the time $t_w$, then we can define a cost function $C(\xi_{t_0:t_w})$ to optimize over the window $w$.
+Let $\xi_{t_0:t_0+w}$ be the path we want to plan, from the current time $t_0$ over a window $w$.
+We define a cost function
+%    $C(\xi_{t_0:t_0+w})$
+$C(\xi)$
+to optimize over this window.
 This cost function can be in the form of a weighted sum of different terms, such as the distance to the goal, the distance to the obstacles, and the smoothness of the path:
 
 \begin{equation}
     \label{eq:cost_general}
-    C(\xi_{t_0:t_w}) = \sum_i \alpha_i C_{task}^i(\xi_{t_0:t_w})
+    C(\xi_{t_0:t_0+w}) = \sum_i \alpha_i C_{task}^i(\xi_{t_0:t_0+w})
 \end{equation}
 
 \noindent
 where $C_{task}^i(.)$ is the cost of the $i$-th term, and $\alpha_i$ is the weight of the $i$-th term.
-
-We propose a new term to this cost function, to incorporate the legibility of the motion,
-and we call it $C_{I}^j(\xi_{t_0:t_w})$, representing the illegibility of the motion for the $j$-th observer.
+%
+We propose an extra term to this cost function, to incorporate the legibility of the motion,
+and we call it $C_{I}^j(\xi_{t_0:t_0+w})$, representing the illegibility of the motion for the $j$-th observer.
 
 %\begin{equation}
 %    \label{eq:cost_leg}
 %    C_{I}^j(\xi_{t_0:t_w}) = \sum_{k=1}^{N_j} \int_{t=t_0}^{t_w} \mathbf{L}(\xi_t, \mathbf{O}_k^j) dt
 %\end{equation}
 
-Let's assume that the sub-trajectory $\xi_{t:t+dt}$ incurs an extra cost of $\Delta C_{I}^j(\xi_{t:t+dt})$ for the $j$-th observer.
-%Then, we can define the cost of the path as:
-
+We assume the trajectory $\xi_{t_0:t_0+w}$ is a sequence of sub-trajectories $\xi_{t:t+dt}$, or simply velocity vector $\mathbf{v}_t$, where $dt$ is the time step.
+Hence, a sub-trajectory $\xi_{t:t+dt}$ incurs an extra cost of $\Delta C_{I}^j(\xi_{t:t+dt})$ for the $j$-th observer.
 We assume that this cost is proportional to the probability of the observer not being able to predict the true intention of the robot, i.e.:
 
 \begin{equation}
     \label{eq:cost_leg}
 %    \Delta C_{I}^j(\xi_{t:t+dt}) \propto \frac{dt}{\exp \left( p^j(G^* | \xi_{t_0:t+dt}) \right)}
-    \Delta C_{I}^j(\xi_{t:t+dt}) \propto dt \times  p^j(g \neq G^* | \xi_{t_0:t+dt})
+    \Delta C_{I}^j(\xi_{t:t+dt}) \propto  \mathrm{P}^j(G \neq G^* | \mathbf{v}_t) ~dt
 \end{equation}
 
 \noindent
-Here, instead of using the approximation used in Eq.~(\ref{eq_dragan9}),
-which assumes an observer will compare the cost of the current path to the cost of the optimal path,
-we only assume the impact of the last action on the observer's belief.
-
-\begin{equation}
-    \label{eq:cost_leg_approx}
-    \Delta C_{I}^j(\xi_{t:t+dt}) \propto dt \times  p^j(g \neq G^* | \xi_{t:t+dt})
-\end{equation}
-
-This approximation helps us to, first, avoid the need for computing the cost of the global optimal path,
-and second, to make the cost function more computationally efficient.
+Here, instead of assuming the observer has access to the full path $\xi_{t_0:t+dt}$,
+we assume the observer only has access to the current state of the robot $\xi_{t:t+dt}$.
+%which assumes an observer will compare the cost of the current path to the cost of the optimal path,
+%we only assume the impact of the last action on the observer's belief.
+%
+%\begin{equation}
+%    \label{eq:cost_leg_approx}
+%    \Delta C_{I}^j(\xi_{t:t+dt}) \propto dt \times  L^j(g \neq G^* | \xi_{t:t+dt})
+%\end{equation}
+%
+This helps us to, first, to make the cost function more computationally efficient.
+and second, to make it more realistic, as we have no information if the robot has been in the observer's field of view in the past,
+or if the observer has actively been paying attention to the robot's behavior.
 
 \noindent
 
 \begin{equation}
     \label{eq:prob_leg}
-    p^j(g \neq G^* | \xi_{t:t+dt}) \propto \sum_{g \neq G^*} L^j(g | \xi_{t:t+dt})
+    \mathrm{P}^j(G \neq G^* | \mathbf{v}_t) = \sum_{G \neq G^*} \mathrm{P}^j(G | \mathbf{v}_t)
 \end{equation}
 
-We can approximate $L^j(g | \xi_{t:t+dt})$ with the projected cosine distance between $\xi_{t:t+dt}$ and the optimal path from $x_t$ to $g$:
+\noindent
+We can approximate $\mathrm{P}^j(G | \mathbf{v}_t)$ with the projected cosine distance between $\mathbf{v}_t$ and the optimal path from $\mathbf{x}_t$ to $G \neq G^*$:
 
 \begin{equation}
     \label{eq:prob_leg_approx}
-    p^j(g \neq \mathrm G^* | \xi_{t:t+dt}) \approx \sum_{g \neq \mathrm G^*}  d (\measuredangle \mathrm T^j \times \mathbf{v}_{t:t+dt}(.|\mathrm G^*),
-                                                                 \measuredangle \mathrm T^j \times \mathbf{v}^*_{t:t+dt}(.|g))
+    \mathrm{P}^j(G \neq \mathrm G^* | \mathbf{v}_t) \approx
+                        \sum_{G \neq \mathrm G^*}  d \measuredangle(
+                                                                        \mathrm T^j \mathbf{v}_t,
+                                                                        \mathrm T^j \mathbf{v}^*_t(.|G))
 \end{equation}
 
 \noindent
 where $\mathrm T^j$ is the transformation matrix from the world frame to the observer's frame $j$,
 and $\mathbf{v}_{t:t+dt}(.|\mathrm G^*)$ is the velocity vector of the robot at time $t$,
-Here we compute the optimal paths also by solving Eq. (\ref{eq:cost_general}) for each goal $g$, and
+Here we compute the optimal paths also by solving Eq. (\ref{eq:cost_general}) for each goal $G$,
+and then we compute the cosine distance between the velocity vector of the robot and the optimal velocity vector for each goal $G$.
 
 %\quote{\hl{Q: Can this be seen as a Dynamic Programming approach to the problem?! Or is it just a greedy approach?}}
+

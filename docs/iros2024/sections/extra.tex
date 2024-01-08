@@ -1,0 +1,20 @@
+\section{Extra Points and Comments}
+
+
+* Note that the ``shortcut heuristic'' used in traditional planners, such as DWA, is not applicable here,
+since finding a shortcut even though might reduce other costs of the plan, it can increase the legibility cost.
+
+
+\vspace{0.3cm}
+\hl{Extra:}
+In fact, optimizing the legibility function directly is not always possible [REF].
+This is because that $\Delta \mathbf{L}(\xi) = 0$ or $\mathbf{L}(\xi) = 1$ might not have a solution in the finite space.
+For this reason, we might need to add some constraints to the equation to make it solvable.
+In the original work, Dragana et al. [X] this is done by adding a regularizer that discourage increasing the path length.
+$L(\xi) = legibility(\xi) - \lambda C(\xi)$
+where $C(\xi)$ is the path length, and $\lambda$ is a constant.
+%    Also, Dragan and Srinivasa [X], introduce a trust region constraint on the optimization
+%     to ensure the motion does not become too surprising or unpredictable to the observer.
+%    This approach in the end, turns to finding a good value for a parameter $\beta$, using a user study.
+Moreover, due to the iterative nature of this approach, it can compromise the real-time performance of the system.
+%    Other works [NIKOLAIDIS] a gradient ascent optimization is called N times, and the solution of the last iteration is returned.
