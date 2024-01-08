@@ -3,8 +3,10 @@
 
 \section{Synthesis}
 
-The problem of generating legible motions for mobile robots has not received as much attention as the evaluation.
+The main motivation of this part is to propose a practical and simple algorithm to generate legible motions for mobile robots.
+And for this we need to highlight that the synthesis problem has not received as much attention as the evaluation in the literature.
 
+Let's start with the legibility function, proposed by Dragan et al. \cite{dragan2013legibility}. 
 In fact, optimizing the legibility function directly is not always possible [REF].
 This is because that $\Delta \mathbf{L}(\xi) = 0$ or $\mathbf{L}(\xi) = 1$ might not have a solution in the finite space.
 For this reason, we might need to add some constraints to the equation to make it solvable.

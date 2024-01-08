@@ -17,7 +17,7 @@
 % including its location, speed, and direction. This representation guides eye and body movements for tracking and interaction.
 
 
-\section{Proposed Contributions:}
+%\section{Proposed Contributions:}
 %    \noindent
 %    \subsection{Modeling Visual Perceptions}
 %
@@ -54,7 +54,7 @@
     \noindent
     \subsection{Synthesis} %New way to generate legible motions for mobile robots:
     %%%%%%%%%%%%%%%%%%%%
-    The second contribution of this work is a new approach to generate legible motions for mobile robots.
+    Here we explaing our contributions, a new algorithm to generate legible motions for mobile robots.
     %
     In fact, the problem of generating legible motions for mobile robots has not received as much attention as the evaluation.
     %
@@ -80,6 +80,11 @@
 %    We then consider adding Random-based sampling to the potential field to generate legible motions in cluttered environments, where the potential field is not enough to generate legible motions.
     Our formulation takes into account the final pose of the robot at the end of the motion,
     and introduces a new cost function to the local planner, to generate legible motions.
+
+
+    We also show how this new formulation makes it more stable and easy to \textbf{dynamically} consider new observers in the environment,
+    once the robot has detected them,
+    or to consider the change in the observer's field of view, by simply re-planning the motion.
 
     %%%%%%%%%%%%%%%%%%%%
 
