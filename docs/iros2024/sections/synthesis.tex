@@ -31,7 +31,7 @@ moving within the robot's kinematic and dynamic constraints, and so on.
 
 
 % ================ Local Planning ================
-\vsapce{~}
+\vspace{0.3cm}
 
 In this work, we propose to use local planning to generate legible motions.
 Back to local planning algorithms, such as Dynamic Window Approach (DWA) \cite{DWA1997}, are designed to generate a motion that is feasible and optimal in terms of a cost function.
@@ -105,7 +105,8 @@ We can approximate $\mathrm{P}^j(G | \mathbf{v}_t)$ with the projected cosine di
 
 \begin{equation}
     \label{eq:prob_leg_approx}
-    \mathrm{P}^j(G \neq \mathrm G^* | \mathbf{v}_t) \approx
+    \mathrm{P}(G \neq \mathrm G^* | \mathbf{v}_t) \approx
+                        \sum_{j \in \mathcal{O}}
                         \sum_{G \neq \mathrm G^*}  d \measuredangle(
                                                                         \mathrm T^j \mathbf{v}_t,
                                                                         \mathrm T^j \mathbf{v}^*_t(.|G))
@@ -119,3 +120,4 @@ and then we compute the cosine distance between the velocity vector of the robot
 
 %\quote{\hl{Q: Can this be seen as a Dynamic Programming approach to the problem?! Or is it just a greedy approach?}}
 
+% ================ Example ================
